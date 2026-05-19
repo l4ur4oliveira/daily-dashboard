@@ -1,0 +1,803 @@
+/* =============================================
+   DESIGN TOKENS
+   ============================================= */
+:root {
+  /* Escala Lime */
+  --color-lime-300: oklch(89.7% 0.196 126.665);
+  --color-lime-400: #79f67a;
+
+  /* Escala Teal */
+  --color-teal-50:  #f7f8f9;
+  --color-teal-100: #eaf1f3;
+  --color-teal-300: #a3c4cd;
+  --color-teal-700: #365761;
+  --color-teal-800: #2a464f;
+  --color-teal-900: #213941;
+  --color-teal-950: #14242a;
+
+  /* Tipografia */
+  --font-open-sans:   "Open Sans",   sans-serif;
+  --font-oxygen-mono: "Oxygen Mono", monospace;
+
+  /* Espaçamentos */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Raios */
+  --radius-sm:   0.5rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   1rem;
+  --radius-xl:   1.5rem;
+  --radius-full: 9999px;
+
+  /* Transições */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* =============================================
+   RESET & BASE
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-open-sans);
+  background-color: var(--color-teal-950);
+  color: var(--color-teal-100);
+  min-height: 100dvh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =============================================
+   LAYOUT WRAPPER
+   ============================================= */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+  max-width: 75rem;
+  margin-inline: auto;
+}
+
+/* =============================================
+   AMBIENT GLOW (decoração de fundo)
+   ============================================= */
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 0%,
+      oklch(from var(--color-lime-400) l c h / 0.06) 0%,
+      transparent 70%),
+    radial-gradient(ellipse 50% 35% at 80% 100%,
+      oklch(from var(--color-teal-700) l c h / 0.18) 0%,
+      transparent 70%);
+  z-index: 0;
+}
+
+.page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-block: var(--space-8) var(--space-10);
+}
+
+.header__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-lime-400);
+}
+
+.header__eyebrow-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-lime-400);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+.header__title {
+  font-family: var(--font-open-sans);
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-teal-50);
+  letter-spacing: -0.02em;
+}
+
+.header__title mark {
+  background: none;
+  color: var(--color-lime-300);
+}
+
+.header__date {
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.85rem;
+  color: var(--color-teal-300);
+  margin-top: var(--space-1);
+}
+
+/* =============================================
+   DIVIDER
+   ============================================= */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--color-teal-700),
+    transparent 80%
+  );
+  margin-bottom: var(--space-8);
+}
+
+/* =============================================
+   SECTION LABEL
+   ============================================= */
+.section-label {
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-teal-300);
+  margin-bottom: var(--space-4);
+}
+
+/* =============================================
+   SUMMARY CARDS GRID
+   ============================================= */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 36rem) {         /* ≥ 576px */
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 56rem) {         /* ≥ 896px */
+  .summary-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* =============================================
+   CARD
+   ============================================= */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--color-teal-900);
+  border: 1px solid var(--color-teal-800);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition:
+    transform    var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow   var(--transition-base);
+}
+
+/* Linha decorativa lateral */
+.card::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 3px;
+  border-radius: var(--radius-full);
+  background: var(--card-accent, var(--color-teal-700));
+  opacity: 0.7;
+  transition: opacity var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-teal-700);
+  box-shadow:
+    0 8px 30px -8px oklch(from var(--color-teal-950) l c h / 0.7),
+    0 0 0 1px oklch(from var(--card-accent, var(--color-teal-700)) l c h / 0.25);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Shimmer sutil no hover */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    oklch(from var(--card-accent, var(--color-teal-700)) l c h / 0.04) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* Variantes de accent por card */
+.card--email   { --card-accent: var(--color-lime-400);  }
+.card--meeting { --card-accent: var(--color-teal-300);  }
+.card--tasks   { --card-accent: oklch(72% 0.18 55);     } /* âmbar */
+
+/* --- Cabeçalho do card --- */
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.card__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  background: oklch(from var(--card-accent, var(--color-teal-700)) l c h / 0.12);
+  color: var(--card-accent, var(--color-teal-300));
+  flex-shrink: 0;
+  transition: background var(--transition-base);
+}
+
+.card:hover .card__icon-wrap {
+  background: oklch(from var(--card-accent, var(--color-teal-700)) l c h / 0.2);
+}
+
+.card__icon-wrap svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke-width: 1.75;
+}
+
+.card__badge {
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  border: 1px solid oklch(from var(--card-accent, var(--color-teal-700)) l c h / 0.3);
+  color: var(--card-accent, var(--color-teal-300));
+  background: oklch(from var(--card-accent, var(--color-teal-700)) l c h / 0.08);
+  white-space: nowrap;
+}
+
+/* --- Corpo do card --- */
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.card__count {
+  font-family: var(--font-oxygen-mono);
+  font-size: clamp(2.25rem, 6vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-teal-50);
+  letter-spacing: -0.03em;
+}
+
+.card__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-teal-100);
+  letter-spacing: -0.01em;
+}
+
+.card__sublabel {
+  font-size: 0.78rem;
+  color: var(--color-teal-300);
+  margin-top: var(--space-1);
+}
+
+/* =============================================
+   CHART SECTION
+   ============================================= */
+.chart-section {
+  margin-top: var(--space-10);
+}
+
+.chart-card {
+  position: relative;
+  padding: var(--space-6);
+  background: var(--color-teal-900);
+  border: 1px solid var(--color-teal-800);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition:
+    border-color var(--transition-base),
+    box-shadow   var(--transition-base);
+}
+
+/* Linha decorativa lateral (lime, igual ao card de email) */
+.chart-card::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 3px;
+  border-radius: var(--radius-full);
+  background: var(--color-lime-400);
+  opacity: 0.7;
+  transition: opacity var(--transition-base);
+}
+
+.chart-card:hover {
+  border-color: var(--color-teal-700);
+  box-shadow: 0 8px 30px -8px oklch(from var(--color-teal-950) l c h / 0.7);
+}
+
+.chart-card:hover::before {
+  opacity: 1;
+}
+
+.chart-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.chart-card__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.chart-card__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-teal-100);
+  letter-spacing: -0.01em;
+}
+
+.chart-card__subtitle {
+  font-size: 0.78rem;
+  color: var(--color-teal-300);
+}
+
+.chart-card__legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-teal-300);
+}
+
+.chart-card__legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-lime-400);
+  flex-shrink: 0;
+}
+
+/* Container do canvas — altura controlada via CSS */
+.chart-card__canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
+@media (min-width: 36rem) {
+  .chart-card__canvas-wrap {
+    height: 240px;
+  }
+}
+
+@media (min-width: 56rem) {
+  .chart-card__canvas-wrap {
+    height: 280px;
+  }
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.footer {
+  margin-top: auto;
+  padding-block: var(--space-10) var(--space-4);
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.7rem;
+  color: var(--color-teal-700);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.footer svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  stroke-width: 1.5;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   LOGIN SCREEN
+   ============================================= */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-teal-950);
+  padding: var(--space-4);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.login-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 10%,
+      oklch(from var(--color-lime-400) l c h / 0.08) 0%,
+      transparent 65%),
+    radial-gradient(ellipse 60% 50% at 75% 90%,
+      oklch(from var(--color-teal-700) l c h / 0.2) 0%,
+      transparent 65%);
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-5);
+  background: var(--color-teal-900);
+  border: 1px solid var(--color-teal-800);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10) var(--space-8);
+  max-width: 26rem;
+  width: 100%;
+  box-shadow:
+    0 24px 60px -12px rgba(0,0,0,0.5),
+    0 0 0 1px oklch(from var(--color-lime-400) l c h / 0.06);
+  animation: card-rise 0.5s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Logo dots */
+.login-card__logo {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.login-card__logo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-lime-400);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+.login-card__logo-dot:nth-child(1) { animation-delay: 0s;   opacity: 1;   }
+.login-card__logo-dot:nth-child(2) { animation-delay: 0.4s; opacity: 0.6; }
+.login-card__logo-dot:nth-child(3) { animation-delay: 0.8s; opacity: 0.3; }
+
+.login-card__eyebrow {
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-lime-400);
+}
+
+.login-card__title {
+  font-family: var(--font-open-sans);
+  font-size: clamp(1.6rem, 5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-teal-50);
+  letter-spacing: -0.02em;
+}
+
+.login-card__title mark {
+  background: none;
+  color: var(--color-lime-300);
+}
+
+.login-card__desc {
+  font-size: 0.88rem;
+  color: var(--color-teal-300);
+  line-height: 1.6;
+  max-width: 20rem;
+}
+
+/* ─── Google Button ─── */
+.google-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-teal-50);
+  color: #1f2937;
+  font-family: var(--font-open-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  transition:
+    background  var(--transition-fast),
+    box-shadow  var(--transition-fast),
+    transform   var(--transition-fast);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+.google-btn:hover {
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  transform: translateY(-1px);
+}
+
+.google-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+}
+
+.google-btn__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.login-card__privacy {
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-teal-700);
+}
+
+/* =============================================
+   HEADER – TOP ROW (user info + signout)
+   ============================================= */
+.header__top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.signout-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: oklch(from var(--color-teal-800) l c h / 0.6);
+  border: 1px solid var(--color-teal-800);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1);
+  color: var(--color-teal-300);
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition:
+    background   var(--transition-fast),
+    border-color var(--transition-fast),
+    color        var(--transition-fast);
+}
+
+.signout-btn:hover {
+  background: var(--color-teal-800);
+  border-color: var(--color-teal-700);
+  color: var(--color-teal-100);
+}
+
+.user-avatar-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 1px solid var(--color-teal-700);
+}
+
+.user-name {
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.signout-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  stroke-width: 1.75;
+  opacity: 0.7;
+}
+
+/* =============================================
+   SKELETON LOADERS
+   ============================================= */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.skeleton {
+  display: inline-block;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--color-teal-800) 25%,
+    var(--color-teal-700) 50%,
+    var(--color-teal-800) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.skeleton--count {
+  width: 3rem;
+  height: 2.5rem;
+}
+
+.skeleton--text {
+  width: 9rem;
+  height: 0.8rem;
+}
+
+/* =============================================
+   MEETINGS SECTION
+   ============================================= */
+.meetings-section {
+  margin-top: var(--space-10);
+}
+
+.meetings-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.meeting-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-teal-900);
+  border: 1px solid var(--color-teal-800);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--transition-base),
+    transform    var(--transition-base);
+}
+
+.meeting-item:hover {
+  border-color: var(--color-teal-700);
+  transform: translateX(3px);
+}
+
+.meeting-item--past {
+  opacity: 0.45;
+}
+
+.meeting-item--now {
+  border-color: var(--color-lime-400);
+  box-shadow: 0 0 0 1px oklch(from var(--color-lime-400) l c h / 0.2);
+}
+
+.meeting-item__time {
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.72rem;
+  color: var(--color-teal-300);
+  white-space: nowrap;
+  padding-top: 2px;
+  min-width: 8rem;
+}
+
+.meeting-item__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.meeting-item__title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-teal-100);
+}
+
+.meeting-item__badge {
+  font-family: var(--font-oxygen-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.meeting-item__badge--now {
+  background: oklch(from var(--color-lime-400) l c h / 0.15);
+  border: 1px solid oklch(from var(--color-lime-400) l c h / 0.4);
+  color: var(--color-lime-400);
+}
+
+.meeting-item__badge--past {
+  background: oklch(from var(--color-teal-700) l c h / 0.2);
+  border: 1px solid var(--color-teal-800);
+  color: var(--color-teal-300);
+}
