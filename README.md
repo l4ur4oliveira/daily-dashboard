@@ -4,9 +4,9 @@ Dashboard to monitor daily e-mails, schedule and tasks.
 
 > 🤖 Vibe coded with [Google Antigravity](https://antigravity.google/).
 
-<div style="text-align: center;">
-    <img height="350" src="./.github/screenshots/dash-auth.png" alt="Dashboard Auth Page" />
-    <img height="350" src="./.github/screenshots/dash-main.png" alt="Dashboard Main Page" />
+<div>
+<img height="400" src="./.github/screenshots/dash-auth.png" alt="Dashboard Auth Page" />
+<img height="400" src="./.github/screenshots/dash-main.png" alt="Dashboard Main Page" />
 </div>
 
 ## 🧩 Tech Stack
